@@ -1,4 +1,5 @@
 module.exports = {
+  parser: '@typescript-eslint/parser',
   extends: [
     'eslint:recommended',
     'plugin:react/recommended',
@@ -8,15 +9,22 @@ module.exports = {
     'eslint-config-prettier',
     "plugin:react-hooks/recommended"
   ],
+  plugins: ['@typescript-eslint', 'import'],
   settings: {
     react: {
       version: 'detect',
     },
     'import/resolver': {
+      typescript: {},
       node: {
-        paths: ['src'],
         extensions: ['.js', '.jsx', '.ts', '.tsx'],
       },
+    },
+    alias: {
+      map: [
+        ['~', './src']
+      ],
+      extensions: ['.js', '.jsx', '.ts', '.tsx']
     },
   },
   rules: {
