@@ -1,11 +1,16 @@
+<<<<<<< Updated upstream
 import Button from ".";
 import { render, screen } from "@testing-library/react";
 import {describe, expect, it} from '@jest/globals'
+=======
+import Button from '.';
+import { render, screen } from '@testing-library/react';
+>>>>>>> Stashed changes
 
-describe("Button", () => {
-  it("Should show button", () => {
+describe('Button', () => {
+  it('Should show button', () => {
     const { debug } = render(<Button>Ativar</Button>);
-    expect(screen.getByRole("button", { name: /ativar/i }));
+    expect(screen.getByRole('button', { name: /ativar/i }));
     debug();
   });
 });
