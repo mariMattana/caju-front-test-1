@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 const Button = styled.button`
   outline: none;
@@ -17,7 +17,7 @@ const Button = styled.button`
 `;
 
 export const ButtonSmall = styled.button<{
-  bgcolor?: string;
+  $bgcolor?: string;
   color?: string;
 }>`
   font-size: 12px;
@@ -25,10 +25,9 @@ export const ButtonSmall = styled.button<{
   border-radius: 4px;
   border: none;
   padding: 4px 16px;
-  background-color: ${(props) => props.bgcolor ?? 'none'};
-  color: ${(props) => props.color ?? "#000"};
+  background-color: ${props => props.$bgcolor ?? 'none'};
+  color: ${props => props.color ?? '#000'};
   cursor: pointer;
 `;
-
 
 export default Button;
