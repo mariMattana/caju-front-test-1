@@ -1,4 +1,4 @@
-import Collumns from './components/Columns';
+import Columns from './components/Columns';
 import * as S from './styles';
 import { SearchBar } from './components/Searchbar';
 import { useRegistrationFetchData } from '~/hooks';
@@ -21,7 +21,7 @@ const DashboardPage = () => {
       {status === 'fetching' && <p>Loading...</p>}
       {status === 'error' && <p>Error: {error}</p>}
       {status === 'fetched' && (
-      <Collumns registrations={registrationData} />)}
+      <Columns registrations={registrationData} />)}
     </S.Container>
   );
 };
