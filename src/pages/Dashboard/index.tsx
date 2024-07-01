@@ -1,12 +1,27 @@
-import Collumns from "./components/Columns";
-import * as S from "./styles";
-import { SearchBar } from "./components/Searchbar";
+import Collumns from './components/Columns';
+import * as S from './styles';
+import { SearchBar } from './components/Searchbar';
+import { useRegistrationFetchData } from '~/hooks';
+import { Registration } from '~/types';
 
 const DashboardPage = () => {
+  const url = import.meta.env.VITE_REGISTRATION_API_URL;
+  const registrationUrl = url + 'registrations'
+
+  const { data, status, error } = useRegistrationFetchData(
+    registrationUrl,
+    'registration_data',
+  );
+
+  const registrationData: Registration[] = data.length? data : []
+
   return (
     <S.Container>
       <SearchBar />
-      <Collumns registrations={[]} />
+      {status === 'fetching' && <p>Loading...</p>}
+      {status === 'error' && <p>Error: {error}</p>}
+      {status === 'fetched' && (
+      <Collumns registrations={registrationData} />)}
     </S.Container>
   );
 };
