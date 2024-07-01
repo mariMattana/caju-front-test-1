@@ -17,7 +17,8 @@ function useRegistrationFetchData(url: string, storageKey: string) {
             throw new Error(`HTTP error! status: ${response.status}`);
           }
           const result = await response.json();
-          setData(result);
+          const dataArray = Array.isArray(result) ? result : [result];
+          setData(dataArray);
           localStorage.setItem(storageKey, JSON.stringify(result));
           setStatus('fetched');
         } catch (err) {
@@ -32,7 +33,7 @@ function useRegistrationFetchData(url: string, storageKey: string) {
 
       fetchData();
   }, [url, storageKey]);
-
+  console.log('data:', data)
   return { data, status, error, setData };
 }
 

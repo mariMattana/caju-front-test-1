@@ -9,12 +9,14 @@ const allColumns = [
 ];
 
 type Props = {
-  registrations?: Registration[];
+  registrations?: Registration[],
+  fetchStatus: string,
+  fetchError?: string | null
 };
 
 
 
-const Columns = (props: Props) => {
+const Columns: React.FC<Props> = ({ registrations = [], fetchStatus, fetchError }) => {
   return (
     <S.Container>
       {allColumns.map(column => {
@@ -24,17 +26,22 @@ const Columns = (props: Props) => {
               <S.TitleColumn $status={column.status}>
                 {column.title}
               </S.TitleColumn>
-              <S.ColumnContent>
-                {props?.registrations?.filter(registration => registration.status === column.status)
-                .map(registration => {
-                  return (
-                    <RegistrationCard
-                      data={registration}
-                      key={registration.id}
-                    />
-                  );
-                })}
-              </S.ColumnContent>
+                {fetchStatus === 'fetched' && ( 
+                  <S.ColumnContent>
+                    {registrations?.filter(registration => registration.status === column.status)
+                      .map((registration: Registration) => {
+                      return (
+                        <RegistrationCard
+                          data={registration}
+                          key={registration.id}
+                        />
+                      );
+                    })}
+                  </S.ColumnContent>)}
+            <>
+              {fetchStatus === 'fetching' && <p>Loading...</p>}
+            </>
+              {fetchStatus === 'error' && <p> Error: {fetchError}</p>}
             </>
           </S.Column>
         );

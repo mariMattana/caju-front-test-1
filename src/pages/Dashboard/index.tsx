@@ -6,22 +6,19 @@ import { Registration } from '~/types';
 
 const DashboardPage = () => {
   const url = import.meta.env.VITE_REGISTRATION_API_URL;
-  const registrationUrl = url + 'registrations'
+  const registrationUrl = url + 'registrations/6'
 
   const { data, status, error } = useRegistrationFetchData(
     registrationUrl,
     'registration_data',
   );
 
-  const registrationData: Registration[] = data.length? data : []
+  const registrationData: Registration[] = data && data.length? data : []
 
   return (
     <S.Container>
       <SearchBar />
-      {status === 'fetching' && <p>Loading...</p>}
-      {status === 'error' && <p>Error: {error}</p>}
-      {status === 'fetched' && (
-      <Columns registrations={registrationData} />)}
+      <Columns registrations={registrationData} fetchStatus={status} fetchError={error}/>
     </S.Container>
   );
 };
