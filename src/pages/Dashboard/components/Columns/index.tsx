@@ -1,15 +1,19 @@
 import * as S from './styles';
 import RegistrationCard from '../RegistrationCard';
 import { Registration } from '~/types';
-import { allColumns } from '~/constants'
+import { allColumns } from '~/constants';
 
 type Props = {
-  registrations?: Registration[],
-  fetchStatus: string,
-  fetchError?: string | null
+  registrations?: Registration[];
+  fetchStatus: string;
+  fetchError?: string | null;
 };
 
-const Columns: React.FC<Props> = ({ registrations = [], fetchStatus, fetchError }) => {
+const Columns: React.FC<Props> = ({
+  registrations = [],
+  fetchStatus,
+  fetchError,
+}) => {
   return (
     <S.Container>
       {allColumns.map(column => {
@@ -19,10 +23,13 @@ const Columns: React.FC<Props> = ({ registrations = [], fetchStatus, fetchError 
               <S.TitleColumn $status={column.status}>
                 {column.title}
               </S.TitleColumn>
-                {fetchStatus === 'fetched' && ( 
-                  <S.ColumnContent>
-                    {registrations?.filter(registration => registration.status === column.status)
-                      .map((registration: Registration) => {
+              {fetchStatus === 'fetched' && (
+                <S.ColumnContent>
+                  {registrations
+                    ?.filter(
+                      registration => registration.status === column.status,
+                    )
+                    .map((registration: Registration) => {
                       return (
                         <RegistrationCard
                           data={registration}
@@ -30,10 +37,9 @@ const Columns: React.FC<Props> = ({ registrations = [], fetchStatus, fetchError 
                         />
                       );
                     })}
-                  </S.ColumnContent>)}
-            <>
-              {fetchStatus === 'fetching' && <p>Loading...</p>}
-            </>
+                </S.ColumnContent>
+              )}
+              <>{fetchStatus === 'fetching' && <p>Loading...</p>}</>
               {fetchStatus === 'error' && <p> Error: {fetchError}</p>}
             </>
           </S.Column>
