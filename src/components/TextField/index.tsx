@@ -24,20 +24,24 @@ export const Input = styled.input<{
   font-weight: normal;
   border-radius: 8px;
   :focus {
-    border-color: 1px solid ${props => (props.valid ? '#007c89' : '#FF0000')};
-    box-shadow: inset 0 0 0 1px
     outline: none;
-      ${props => (props.valid ? '#007c89' : '#FF0000')};
+    border: 1px solid ${props => (props.valid ? '#007c89' : '#FF0000')};
+    box-shadow: inset 0 0 0 1px #007c89;
   }
 `;
 
-const TextField = (props: Props) => {
-  console.log(props);
+const TextField = ({
+  label,
+  error,
+  id,
+  valid = true,
+  ...inputProps
+}: Props) => {
   return (
     <div>
-      <label htmlFor={props.id}>{props.label}</label>
-      <Input {...props} />
-      <span style={{ fontSize: 12, color: 'red' }}>{props.error}</span>
+      <label htmlFor={id}>{label}</label>
+      <Input {...inputProps} valid={valid} />
+      <span style={{ fontSize: 12, color: 'red' }}>{error}</span>
     </div>
   );
 };

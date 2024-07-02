@@ -2,7 +2,11 @@ import { useState } from 'react';
 import TextField from '~/components/TextField';
 import { formatCPF, validateCPF } from '~/utils';
 
-const CPFInput: React.FC = () => {
+type CPFInputProps = {
+  label?: string;
+} & React.InputHTMLAttributes<HTMLInputElement>;
+
+const CPFInput: React.FC<CPFInputProps> = ({ label }) => {
   const [cpf, setCPF] = useState('');
   const [isValid, setIsValid] = useState(true);
 
@@ -26,6 +30,7 @@ const CPFInput: React.FC = () => {
         value={cpf}
         onChange={handleChange}
         valid={isValid}
+        label={label}
       />
       {!isValid && <p style={{ color: 'red' }}>CPF Inválido</p>}
     </div>
