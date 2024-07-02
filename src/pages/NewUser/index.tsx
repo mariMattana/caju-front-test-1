@@ -1,4 +1,5 @@
 import TextField from '~/components/TextField';
+import CPFInput from '~/components/Cpf';
 import * as S from './styles';
 import Button from '~/components/Buttons';
 import { HiOutlineArrowLeft } from 'react-icons/hi';
@@ -20,7 +21,7 @@ const NewUserPage = () => {
         </IconButton>
         <TextField placeholder="Nome" label="Nome" />
         <TextField placeholder="Email" label="Email" type="email" />
-        <TextField placeholder="CPF" label="CPF" />
+        <CPFInput label="CPF" />
         <TextField label="Data de admissão" type="date" />
         <Button onClick={() => {}}>Cadastrar</Button>
       </S.Card>
