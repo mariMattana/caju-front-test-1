@@ -12,7 +12,6 @@ const CPFInput: React.FC<CPFInputProps> = ({ label }) => {
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = event.target;
-    console.log('value: ', value);
     const formattedCPF = formatCPF(value);
     setCPF(formattedCPF);
     if (formattedCPF.trim() === '') {

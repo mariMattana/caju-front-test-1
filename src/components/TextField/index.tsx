@@ -8,7 +8,7 @@ type Props = {
 } & InputHTMLAttributes<HTMLInputElement>;
 
 export const Input = styled.input<{
-  valid?: boolean;
+  $valid?: boolean;
 }>`
   padding: 0 8px;
   vertical-align: middle;
@@ -17,7 +17,7 @@ export const Input = styled.input<{
   min-height: 36px;
   background-color: #ffffff;
   border: 1px solid
-    ${props => (props.valid ? 'rgba(36, 28, 21, 0.3)' : '#FF0000')};
+    ${props => (props.$valid ? 'rgba(36, 28, 21, 0.3)' : '#FF0000')};
   transition: all 0.2s ease-in-out 0s;
   font-size: 16px;
   line-height: 18px;
@@ -25,7 +25,7 @@ export const Input = styled.input<{
   border-radius: 8px;
   :focus {
     outline: none;
-    border: 1px solid ${props => (props.valid ? '#007c89' : '#FF0000')};
+    border: 1px solid ${props => (props.$valid ? '#007c89' : '#FF0000')};
     box-shadow: inset 0 0 0 1px #007c89;
   }
 `;
@@ -40,7 +40,7 @@ const TextField = ({
   return (
     <div>
       <label htmlFor={id}>{label}</label>
-      <Input {...inputProps} valid={valid} />
+      <Input {...inputProps} $valid={valid} />
       <span style={{ fontSize: 12, color: 'red' }}>{error}</span>
     </div>
   );
