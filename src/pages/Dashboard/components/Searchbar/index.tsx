@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom';
 import Button from '~/components/Buttons';
 import { IconButton } from '~/components/Buttons/IconButton';
 import TextField from '~/components/TextField';
-import routes from '~/router/routes';
+import routes from '~/constants/routes';
 import * as S from './styles';
 export const SearchBar = () => {
   const history = useHistory();
