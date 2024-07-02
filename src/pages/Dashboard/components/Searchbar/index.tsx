@@ -2,7 +2,7 @@ import { HiRefresh } from 'react-icons/hi';
 import { useHistory } from 'react-router-dom';
 import Button from '~/components/Buttons';
 import { IconButton } from '~/components/Buttons/IconButton';
-import TextField from '~/components/TextField';
+import CPFInput from '~/components/Cpf';
 import routes from '~/constants/routes';
 import * as S from './styles';
 export const SearchBar = () => {
@@ -14,7 +14,7 @@ export const SearchBar = () => {
 
   return (
     <S.Container>
-      <TextField placeholder="Digite um CPF válido" />
+      <CPFInput />
       <S.Actions>
         <IconButton aria-label="refetch">
           <HiRefresh />
