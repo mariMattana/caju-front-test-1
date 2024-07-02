@@ -1,20 +1,13 @@
 import * as S from './styles';
 import RegistrationCard from '../RegistrationCard';
 import { Registration } from '~/types';
-
-const allColumns = [
-  { status: 'REVIEW', title: 'Pronto para revisar' },
-  { status: 'APPROVED', title: 'Aprovado' },
-  { status: 'REPROVED', title: 'Reprovado' },
-];
+import { allColumns } from '~/constants'
 
 type Props = {
   registrations?: Registration[],
   fetchStatus: string,
   fetchError?: string | null
 };
-
-
 
 const Columns: React.FC<Props> = ({ registrations = [], fetchStatus, fetchError }) => {
   return (
