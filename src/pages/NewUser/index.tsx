@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import TextField from '~/components/TextField';
 import CPFInput from '~/components/Cpf';
 import EmailInput from '~/components/Email';
+import FullNameInput from '~/components/Name';
 import * as S from './styles';
 import Button from '~/components/Buttons';
 import { HiOutlineArrowLeft } from 'react-icons/hi';
@@ -20,19 +21,20 @@ const NewUserPage = () => {
   const [email, setEmail] = useState('');
   const [isEmailValid, setIsEmailValid] = useState(true);
   const [employeeName, setEmployeeName] = useState('');
+  const [isNameValid, setIsNameValid] = useState(true);
   const { data, error, loading, postRegistration } = useAddRegistration();
   const [isButtonDisabled, setIsButtonDisabled] = useState(false);
   const { state, updateState } = useMyState();
   const cpf = state.cpf;
-  console.log(isButtonDisabled);
-  console.log('isEmailValid', isEmailValid);
-  console.log('admissionDate', admissionDate);
-  console.log('employeeName', employeeName);
-  console.log('cpf', state.validCpf);
 
   const handleEmailChange = (value: string, isValid: boolean) => {
     setEmail(value);
     setIsEmailValid(isValid);
+  };
+
+  const handleNameChange = (value: string, isValid: boolean) => {
+    setEmployeeName(value);
+    setIsNameValid(isValid);
   };
 
   const handleSubmit = async () => {
@@ -51,7 +53,7 @@ const NewUserPage = () => {
 
   useEffect(() => {
     setIsButtonDisabled(
-      !isEmailValid || !admissionDate || !employeeName || !state.validCpf,
+      !isEmailValid || !admissionDate || !isNameValid || !state.validCpf,
     );
   }, [isEmailValid, admissionDate, employeeName, state]);
 
@@ -61,12 +63,7 @@ const NewUserPage = () => {
         <IconButton onClick={() => goToHome()} aria-label="back">
           <HiOutlineArrowLeft size={24} />
         </IconButton>
-        <TextField
-          placeholder="Nome"
-          label="Nome"
-          value={employeeName}
-          onChange={e => setEmployeeName(e.target.value)}
-        />
+        <FullNameInput onChange={handleNameChange} />
         <EmailInput onChange={handleEmailChange} />
         <CPFInput label="CPF" />
         <TextField
