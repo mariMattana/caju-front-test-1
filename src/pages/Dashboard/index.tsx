@@ -1,14 +1,18 @@
+import { useState, useEffect } from 'react';
 import Columns from './components/Columns';
 import * as S from './styles';
 import { SearchBar } from './components/Searchbar';
 import { ActionModal } from '~/components/Modal';
-import { useRegistrationFetchData } from '~/hooks';
+import { useRegistrationFetchData, useMyState } from '~/hooks';
 import { routes, baseUrl } from '~/constants';
 import { Registration } from '~/types';
 
 const DashboardPage = () => {
-  const registrationUrl = baseUrl + routes.registrations;
+  const initialDashboardUrl = baseUrl + routes.registrations;
+  const [registrationUrl, setRegistrationUrl] =
+    useState<string>(initialDashboardUrl);
 
+  const { state } = useMyState();
   const {
     data,
     status,
@@ -20,6 +24,15 @@ const DashboardPage = () => {
   } = useRegistrationFetchData(registrationUrl);
 
   const registrationData: Registration[] = data && data.length ? data : [];
+
+  useEffect(() => {
+    if (state.cpf && state.validCpf) {
+      const formattedCpf = state.cpf.replace(/\D/g, '').slice(0, 11).trim();
+      setRegistrationUrl(`${initialDashboardUrl}?cpf=${formattedCpf}`);
+    } else if (state.cpf === '') {
+      setRegistrationUrl(initialDashboardUrl);
+    }
+  }, [state, initialDashboardUrl]);
 
   return (
     <S.Container>

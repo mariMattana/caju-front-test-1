@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import TextField from '~/components/TextField';
 import { formatCPF, validateCPF } from '~/utils';
+import { useMyState } from '~/hooks';
 
 type CPFInputProps = {
   label?: string;
@@ -9,16 +10,22 @@ type CPFInputProps = {
 const CPFInput: React.FC<CPFInputProps> = ({ label }) => {
   const [cpf, setCPF] = useState('');
   const [isValid, setIsValid] = useState(true);
+  const { updateState } = useMyState();
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = event.target;
     const formattedCPF = formatCPF(value);
     setCPF(formattedCPF);
-    if (formattedCPF.trim() === '') {
-      setIsValid(true);
-    } else {
-      setIsValid(validateCPF(formattedCPF));
-    }
+    const hasValidLength =
+      value.length === 0 ||
+      value.replace(/\D/g, '').slice(0, 11).trim().length === 11;
+    const newIsValid = hasValidLength && validateCPF(formattedCPF);
+    setIsValid(newIsValid);
+    updateState(prevState => ({
+      ...prevState,
+      validCpf: newIsValid,
+      cpf: formattedCPF,
+    }));
   };
 
   return (

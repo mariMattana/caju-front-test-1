@@ -5,7 +5,7 @@ const routes = {
   dashboard: '/dashboard',
   history: '/history',
   newUser: '/new-user',
-  registrations: 'registrations/',
+  registrations: '/registrations',
 };
 
 export default routes;
