@@ -4,11 +4,11 @@ import * as S from './styles';
 import { SearchBar } from './components/Searchbar';
 import { ActionModal } from '~/components/Modal';
 import { useRegistrationFetchData, useMyState } from '~/hooks';
-import { routes, baseUrl } from '~/constants';
+import { REGISTRATION_URL } from '~/constants';
 import { Registration } from '~/types';
 
 const DashboardPage = () => {
-  const initialDashboardUrl = baseUrl + routes.registrations;
+  const initialDashboardUrl = REGISTRATION_URL;
   const [registrationUrl, setRegistrationUrl] =
     useState<string>(initialDashboardUrl);
 

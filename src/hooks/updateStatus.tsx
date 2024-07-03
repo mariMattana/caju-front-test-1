@@ -1,4 +1,4 @@
-import { routes, baseUrl } from '~/constants';
+import { REGISTRATION_ID_URL } from '~/constants';
 import { Registration } from '~/types';
 
 type UpdateStatusFn = (
@@ -11,9 +11,9 @@ function useRegistrationUpdate(): { updateRegistrationStatus: UpdateStatusFn } {
     registrationId,
     newStatus,
   ) => {
-    const registrationUrl = baseUrl + routes.registrations;
     try {
-      const response = await fetch(registrationUrl + registrationId);
+      const updateUrl = REGISTRATION_ID_URL(registrationId);
+      const response = await fetch(updateUrl);
       if (!response.ok) {
         throw new Error(
           `Failed to fetch registration with ID ${registrationId}`,
@@ -23,7 +23,7 @@ function useRegistrationUpdate(): { updateRegistrationStatus: UpdateStatusFn } {
 
       registration.status = newStatus;
 
-      const updateResponse = await fetch(registrationUrl + registrationId, {
+      const updateResponse = await fetch(updateUrl, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',

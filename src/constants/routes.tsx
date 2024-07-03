@@ -9,3 +9,8 @@ const routes = {
 };
 
 export default routes;
+
+export const REGISTRATION_URL = `${baseUrl}/registrations`;
+export const REGISTRATION_ID_URL = (registrationId: string): string => {
+  return `${REGISTRATION_URL}/${registrationId}`;
+};

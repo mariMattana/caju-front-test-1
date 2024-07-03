@@ -13,7 +13,7 @@ export const ActionModal: React.FC<ModalTypes> = ({
     if (isOpen && status === 'success') {
       const timer = setTimeout(() => {
         closeModal();
-      }, 1500);
+      }, 500);
 
       return () => clearTimeout(timer);
     }
