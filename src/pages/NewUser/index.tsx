@@ -1,6 +1,7 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import TextField from '~/components/TextField';
 import CPFInput from '~/components/Cpf';
+import EmailInput from '~/components/Email';
 import * as S from './styles';
 import Button from '~/components/Buttons';
 import { HiOutlineArrowLeft } from 'react-icons/hi';
@@ -17,10 +18,22 @@ const NewUserPage = () => {
 
   const [admissionDate, setAdmissionDate] = useState('');
   const [email, setEmail] = useState('');
+  const [isEmailValid, setIsEmailValid] = useState(true);
   const [employeeName, setEmployeeName] = useState('');
-  const [cpf, setCpf] = useState('');
   const { data, error, loading, postRegistration } = useAddRegistration();
-  const { updateState } = useMyState();
+  const [isButtonDisabled, setIsButtonDisabled] = useState(false);
+  const { state, updateState } = useMyState();
+  const cpf = state.cpf;
+  console.log(isButtonDisabled);
+  console.log('isEmailValid', isEmailValid);
+  console.log('admissionDate', admissionDate);
+  console.log('employeeName', employeeName);
+  console.log('cpf', state.validCpf);
+
+  const handleEmailChange = (value: string, isValid: boolean) => {
+    setEmail(value);
+    setIsEmailValid(isValid);
+  };
 
   const handleSubmit = async () => {
     try {
@@ -36,6 +49,12 @@ const NewUserPage = () => {
     }
   };
 
+  useEffect(() => {
+    setIsButtonDisabled(
+      !isEmailValid || !admissionDate || !employeeName || !state.validCpf,
+    );
+  }, [isEmailValid, admissionDate, employeeName, state]);
+
   return (
     <S.Container>
       <S.Card>
@@ -48,21 +67,15 @@ const NewUserPage = () => {
           value={employeeName}
           onChange={e => setEmployeeName(e.target.value)}
         />
-        <TextField
-          placeholder="Email"
-          label="Email"
-          type="email"
-          value={email}
-          onChange={e => setEmail(e.target.value)}
-        />
-        <CPFInput label="CPF" onChange={e => setCpf(e.target.value)} />
+        <EmailInput onChange={handleEmailChange} />
+        <CPFInput label="CPF" />
         <TextField
           label="Data de admissão"
           type="date"
           value={admissionDate}
           onChange={e => setAdmissionDate(e.target.value)}
         />
-        <Button onClick={handleSubmit} disabled={loading}>
+        <Button onClick={handleSubmit} disabled={isButtonDisabled}>
           {loading ? 'Cadastrando...' : 'Cadastrar'}
         </Button>
         {error && <p>Error: {error}</p>}
