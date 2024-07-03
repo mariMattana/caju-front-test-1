@@ -7,7 +7,7 @@ import { HiOutlineArrowLeft } from 'react-icons/hi';
 import { IconButton } from '~/components/Buttons/IconButton';
 import { useHistory } from 'react-router-dom';
 import routes from '~/constants/routes';
-import { useAddRegistration } from '~/hooks';
+import { useAddRegistration, useMyState } from '~/hooks';
 
 const NewUserPage = () => {
   const history = useHistory();
@@ -20,11 +20,19 @@ const NewUserPage = () => {
   const [employeeName, setEmployeeName] = useState('');
   const [cpf, setCpf] = useState('');
   const { data, error, loading, postRegistration } = useAddRegistration();
+  const { updateState } = useMyState();
 
   const handleSubmit = async () => {
-    await postRegistration({ admissionDate, email, employeeName, cpf });
-    if (data) {
+    try {
+      await postRegistration({ admissionDate, email, employeeName, cpf });
+      updateState(prevState => ({
+        ...prevState,
+        validCpf: false,
+        cpf: '',
+      }));
       goToHome();
+    } catch (err) {
+      console.error('Error registering:', err);
     }
   };
 
