@@ -9,6 +9,7 @@ import {
 import { Registration } from '~/types';
 import { RegistrationStatus } from '~/enums';
 import { useRegistrationUpdate } from '~/hooks';
+import useDeleteRegistrationRegistration from '~/hooks/deleteRegistration';
 
 type Props = {
   data: Registration;
@@ -16,6 +17,7 @@ type Props = {
 
 const RegistrationCard: React.FC<Props> = ({ data }) => {
   const { updateRegistrationStatus } = useRegistrationUpdate();
+  const { deleteRegistration } = useDeleteRegistrationRegistration();
 
   const handleStatusChange = async (
     registrationId: string,
@@ -27,6 +29,11 @@ const RegistrationCard: React.FC<Props> = ({ data }) => {
     } catch (error) {
       console.error('Failed to update registration status:', error);
     }
+  };
+
+  const handleDelete = (id: string) => {
+    deleteRegistration(id);
+    window.location.reload();
   };
 
   return (
@@ -74,7 +81,7 @@ const RegistrationCard: React.FC<Props> = ({ data }) => {
             Revisar novamente
           </ButtonSmall>
         )}
-        <HiOutlineTrash />
+        <HiOutlineTrash onClick={() => handleDelete(data.id)} />
       </S.Actions>
     </S.Card>
   );
