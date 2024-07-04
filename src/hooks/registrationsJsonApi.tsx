@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useMyState } from '~/hooks';
 import { Registration } from '~/types';
 
 type RequestStatus = 'idle' | 'fetching' | 'fetched' | 'error';
@@ -7,11 +8,7 @@ function useRegistrationFetchData(url: string) {
   const [data, setData] = useState<Registration[]>([]);
   const [status, setStatus] = useState<RequestStatus>('idle');
   const [error, setError] = useState<string | null>(null);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [modalMessage, setModalMessage] = useState<string>('');
-  const [modalStatus, setModalStatus] = useState<'success' | 'error'>(
-    'success',
-  );
+  const { updateModalState } = useMyState();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -25,39 +22,39 @@ function useRegistrationFetchData(url: string) {
         const dataArray = Array.isArray(result) ? result : [result];
         setData(dataArray);
         setStatus('fetched');
-        setModalStatus('success');
-        setModalMessage('Sucesso');
       } catch (err) {
         if (err instanceof Error) {
           setError(err.message);
-          setModalMessage(`Erro: ${err.message}`);
         } else {
           setError('An unknown error occurred');
-          setModalMessage('Ocorreu um erro, tente novamente');
         }
         setStatus('error');
-        setModalStatus('error');
-      } finally {
-        setIsModalOpen(true);
       }
     };
 
     fetchData();
   }, [url]);
 
-  const closeModal = () => {
-    setIsModalOpen(false);
-  };
+  useEffect(() => {
+    if (status === 'fetched') {
+      updateModalState({
+        isOpen: true,
+        status: 'success',
+        message: 'Dados carregados com sucesso',
+      });
+    } else if (status === 'error') {
+      updateModalState({
+        isOpen: true,
+        status: 'error',
+        message: `Erro ao carregar dados: ${error}`,
+      });
+    }
+  }, [status, error, updateModalState]);
 
   return {
     data,
     status,
     error,
-    setData,
-    isModalOpen,
-    modalMessage,
-    modalStatus,
-    closeModal,
   };
 }
 
