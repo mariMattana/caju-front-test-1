@@ -1,6 +1,9 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useMyState } from '~/hooks';
 import { Registration } from '~/types';
 import { REGISTRATION_URL } from '~/constants';
+import { useHistory } from 'react-router-dom';
+import routes from '~/constants/routes';
 
 interface RegistrationData {
   admissionDate: string;
@@ -9,10 +12,18 @@ interface RegistrationData {
   cpf: string;
 }
 
+type RequestStatus = 'idle' | 'fetching' | 'fetched' | 'error';
+
 const useAddRegistration = () => {
   const [data, setData] = useState<Registration | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
+  const [status, setStatus] = useState<RequestStatus>('idle');
+  const history = useHistory();
+  const goToHome = () => {
+    history.push(routes.dashboard);
+  };
+  const { updateModalState } = useMyState();
 
   const postRegistration = async (registrationData: RegistrationData) => {
     setLoading(true);
@@ -38,16 +49,36 @@ const useAddRegistration = () => {
 
       const result: Registration = await response.json();
       setData(result);
+      setStatus('fetched');
     } catch (err) {
       if (err instanceof Error) {
         setError(err.message);
       } else {
         setError('An unknown error occurred');
       }
+      setStatus('error');
     } finally {
       setLoading(false);
     }
   };
+
+  useEffect(() => {
+    if (status === 'fetched') {
+      updateModalState({
+        isOpen: true,
+        status: 'success',
+        message: 'Registro adicionado com sucesso',
+        onClose: goToHome,
+      });
+    } else if (status === 'error') {
+      updateModalState({
+        isOpen: true,
+        status: 'error',
+        message: `Erro ao adicionar registro: ${error}`,
+        onClose: undefined,
+      });
+    }
+  }, [status, error, updateModalState]);
 
   return { data, error, loading, postRegistration };
 };
