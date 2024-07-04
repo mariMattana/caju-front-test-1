@@ -1,14 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useMyState } from '~/hooks';
 import { REGISTRATION_ID_URL } from '~/constants';
-import { Registration } from '~/types';
-
-type UpdateStatusFn = (
-  registrationId: string,
-  newStatus: string,
-) => Promise<void>;
-
-type RequestStatus = 'idle' | 'fetching' | 'fetched' | 'error';
+import { Registration, UpdateStatusFn, RequestStatus } from '~/types';
 
 function useRegistrationUpdate(): { updateRegistrationStatus: UpdateStatusFn } {
   const [status, setStatus] = useState<RequestStatus>('idle');

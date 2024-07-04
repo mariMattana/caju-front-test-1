@@ -1,10 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useMyState } from '~/hooks';
 import { REGISTRATION_ID_URL } from '~/constants';
-
-type DeleteRegistrationFn = (registrationId: string) => Promise<void>;
-
-type RequestStatus = 'idle' | 'fetching' | 'fetched' | 'error';
+import { DeleteRegistrationFn, RequestStatus } from '~/types';
 
 function useDeleteRegistration(): { deleteRegistration: DeleteRegistrationFn } {
   const [status, setStatus] = useState<RequestStatus>('idle');

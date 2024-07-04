@@ -6,18 +6,13 @@ import {
   HiOutlineCalendar,
   HiOutlineTrash,
 } from 'react-icons/hi';
-import { Registration } from '~/types';
+import { RegistrationCardType } from '~/types';
 import { RegistrationStatus } from '~/enums';
-import { useRegistrationUpdate } from '~/hooks';
-import useDeleteRegistrationRegistration from '~/hooks/deleteRegistration';
+import { useRegistrationUpdate, useDeleteRegistration } from '~/hooks';
 
-type Props = {
-  data: Registration;
-};
-
-const RegistrationCard: React.FC<Props> = ({ data }) => {
+const RegistrationCard: React.FC<RegistrationCardType> = ({ data }) => {
   const { updateRegistrationStatus } = useRegistrationUpdate();
-  const { deleteRegistration } = useDeleteRegistrationRegistration();
+  const { deleteRegistration } = useDeleteRegistration();
 
   const handleStatusChange = async (
     registrationId: string,

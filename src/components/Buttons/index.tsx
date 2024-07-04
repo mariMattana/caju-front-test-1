@@ -1,8 +1,5 @@
 import styled from 'styled-components';
-
-interface ButtonProps {
-  disabled?: boolean;
-}
+import { ButtonProps } from '~/types';
 
 const Button = styled.button<ButtonProps>`
   outline: none;

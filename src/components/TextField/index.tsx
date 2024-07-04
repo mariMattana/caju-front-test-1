@@ -1,11 +1,5 @@
-import { InputHTMLAttributes } from 'react';
 import styled from 'styled-components';
-
-type Props = {
-  label?: string;
-  error?: string;
-  valid?: boolean;
-} & InputHTMLAttributes<HTMLInputElement>;
+import { TextProps } from '~/types';
 
 export const Input = styled.input<{
   $valid?: boolean;
@@ -36,7 +30,7 @@ const TextField = ({
   id,
   valid = true,
   ...inputProps
-}: Props) => {
+}: TextProps) => {
   return (
     <div>
       <label htmlFor={id}>{label}</label>

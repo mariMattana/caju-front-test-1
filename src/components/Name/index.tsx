@@ -1,10 +1,7 @@
 import { useState } from 'react';
 import TextField from '~/components/TextField';
 import { validateFullName } from '~/utils';
-
-type NameInputProps = {
-  onChange: (value: string, isValid: boolean) => void;
-};
+import { NameInputProps } from '~/types';
 
 export const FullNameInput: React.FC<NameInputProps> = ({ onChange }) => {
   const [employeeName, setEmployeeName] = useState('');

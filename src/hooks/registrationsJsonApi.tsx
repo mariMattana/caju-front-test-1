@@ -1,8 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useMyState } from '~/hooks';
-import { Registration } from '~/types';
-
-type RequestStatus = 'idle' | 'fetching' | 'fetched' | 'error';
+import { Registration, RequestStatus } from '~/types';
 
 function useRegistrationFetchData(url: string) {
   const [data, setData] = useState<Registration[]>([]);

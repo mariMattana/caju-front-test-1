@@ -2,10 +2,7 @@ import { useState } from 'react';
 import TextField from '~/components/TextField';
 import { formatCPF, validateCPF } from '~/utils';
 import { useMyState } from '~/hooks';
-
-type CPFInputProps = {
-  label?: string;
-} & React.InputHTMLAttributes<HTMLInputElement>;
+import { CPFInputProps } from '~/types';
 
 const CPFInput: React.FC<CPFInputProps> = ({ label }) => {
   const [cpf, setCPF] = useState('');

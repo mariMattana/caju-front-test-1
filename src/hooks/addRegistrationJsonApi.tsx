@@ -4,15 +4,7 @@ import { Registration } from '~/types';
 import { REGISTRATION_URL } from '~/constants';
 import { useHistory } from 'react-router-dom';
 import routes from '~/constants/routes';
-
-interface RegistrationData {
-  admissionDate: string;
-  email: string;
-  employeeName: string;
-  cpf: string;
-}
-
-type RequestStatus = 'idle' | 'fetching' | 'fetched' | 'error';
+import { RequestStatus, RegistrationData } from '~/types';
 
 const useAddRegistration = () => {
   const [data, setData] = useState<Registration | null>(null);

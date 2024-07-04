@@ -1,10 +1,7 @@
 import { useState } from 'react';
 import TextField from '~/components/TextField';
 import isEmail from 'validator/lib/isEmail';
-
-type EmailInputProps = {
-  onChange: (value: string, isValid: boolean) => void;
-};
+import { EmailInputProps } from '~/types';
 
 export const EmailInput: React.FC<EmailInputProps> = ({ onChange }) => {
   const [email, setEmail] = useState('');
