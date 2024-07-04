@@ -25,7 +25,6 @@ const RegistrationCard: React.FC<Props> = ({ data }) => {
   ) => {
     try {
       await updateRegistrationStatus(registrationId, newStatus);
-      window.location.reload();
     } catch (error) {
       console.error('Failed to update registration status:', error);
     }

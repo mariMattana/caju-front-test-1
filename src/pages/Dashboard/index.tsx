@@ -13,15 +13,8 @@ const DashboardPage = () => {
     useState<string>(initialDashboardUrl);
 
   const { state } = useMyState();
-  const {
-    data,
-    status,
-    error,
-    isModalOpen,
-    modalMessage,
-    modalStatus,
-    closeModal,
-  } = useRegistrationFetchData(registrationUrl);
+
+  const { data, status, error } = useRegistrationFetchData(registrationUrl);
 
   const registrationData: Registration[] = data && data.length ? data : [];
 
@@ -42,12 +35,7 @@ const DashboardPage = () => {
         fetchStatus={status}
         fetchError={error}
       />
-      <ActionModal
-        isOpen={isModalOpen}
-        closeModal={closeModal}
-        status={modalStatus}
-        message={modalMessage}
-      />
+      <ActionModal />
     </S.Container>
   );
 };

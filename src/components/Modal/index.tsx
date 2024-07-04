@@ -1,23 +1,38 @@
 import { useEffect } from 'react';
 import Modal from 'react-modal';
-import { ModalTypes } from '~/types';
+import { useMyState } from '~/hooks';
 import * as S from './styles';
 
-export const ActionModal: React.FC<ModalTypes> = ({
-  isOpen,
-  closeModal,
-  status,
-  message,
-}) => {
+export const ActionModal = () => {
+  const { state, updateModalState } = useMyState();
+  const { isOpen, status, message, onClose } = state.modalState;
+
   useEffect(() => {
     if (isOpen && status === 'success') {
       const timer = setTimeout(() => {
-        closeModal();
+        updateModalState(prevState => ({
+          ...prevState,
+          isOpen: false,
+        }));
+        if (onClose) {
+          onClose();
+        }
       }, 500);
 
       return () => clearTimeout(timer);
     }
-  }, [isOpen, status, closeModal]);
+  }, [isOpen, status, updateModalState, onClose]);
+
+  const closeModal = () => {
+    updateModalState(prevState => ({
+      ...prevState,
+      isOpen: false,
+    }));
+    if (onClose) {
+      onClose();
+    }
+  };
+
   return (
     <Modal
       isOpen={isOpen}

@@ -3,6 +3,7 @@ import TextField from '~/components/TextField';
 import CPFInput from '~/components/Cpf';
 import EmailInput from '~/components/Email';
 import FullNameInput from '~/components/Name';
+import { ActionModal } from '~/components/Modal';
 import * as S from './styles';
 import Button from '~/components/Buttons';
 import { HiOutlineArrowLeft } from 'react-icons/hi';
@@ -45,7 +46,6 @@ const NewUserPage = () => {
         validCpf: false,
         cpf: '',
       }));
-      goToHome();
     } catch (err) {
       console.error('Error registering:', err);
     }
@@ -78,6 +78,7 @@ const NewUserPage = () => {
         {error && <p>Error: {error}</p>}
         {data && <p>Registration successful: {JSON.stringify(data)}</p>}
       </S.Card>
+      <ActionModal />
     </S.Container>
   );
 };
